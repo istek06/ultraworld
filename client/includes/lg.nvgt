@@ -1,0 +1,22 @@
+void lgs() {
+	dictionary sounds;
+	sounds.set("A new character created.", "newchar2");
+	sounds.set("The sound of a player beacon who is not in the same team as you.", "beacon");
+	sounds.set("The sound of a player beacon who is PVP.", "pvpbeacon");
+	sounds.set("The sound of a player beacon who is in the same team as you.", "beacon2");
+	sounds.set("A chat message was sent by you or an other player.", chatsound);
+	sounds.set("You send or receive a private message.",pmsound);
+	sounds.set("You or a player has disconnected from the server.",offlinesound);
+	sounds.set("You or a player has connected to the server.",onlinesound);
+	sounds.set("You or a player turned on PVP.", "pvpon");
+	sounds.set("You or a player turned off PVP.", "pvpoff");
+	sounds.set("You or a player turned on AFK.", "afkon");
+	sounds.set("You or a player turned off AFK", "afkoff");
+	sounds.set("you or a player starts an auction", "auction");
+	sounds.set("You or a player bids on the auction", "bid");
+	sounds.set("An auction canceld or reset", "auctionwon");
+	sounds.set("An important game update from staff", "horn2");
+	sounds.set("A notification from server", "notice");
+	learn_game_sounds lg(sounds,"");
+	lg.run();
+}
