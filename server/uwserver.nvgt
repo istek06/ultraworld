@@ -294,7 +294,6 @@ void setupserver() {
 	create_store("tobacconist_store");
 	create_store("diy_store");
 	create_store("survival_store");
-	create_store("bar_counter");
 	create_store("kitchen_store");
 	create_store("technology_store");
 	create_store("ghosttiketmachine_store");

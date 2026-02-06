@@ -2098,17 +2098,23 @@ void player_event(player@p, string event) {
 			server_menu2 m;
 			m.intro = "Choose a store type to build";
 			m.initial_packet = "pstore2";
-			m.add("clothing store", "clothing_store");
-			m.add("weapon store", "weapon_store");
-			//m.add("vehicle store", "vehicle_store");
+			m			.add("clothing store", "clothing_store");
+			m.add("DIY store", "diy_store");
+			m.add("explosive  store", "explosive_store");
 			m.add("fastfood store", "fastfood_store");
-			m.add("explosive store", "explosive_store");
+			m.add("fruit store", "fruit_store");
+			m.add("grocery store", "grocery_store");
+			m.add("household store", "household_store");
+			m.add("jewelry store", "jewelry");
+			m.add("kitchen store", "kitchen_store");
 			m.add("misc store", "misc_store");
 			m.add("medical store", "medical_store");
-			m.add("fruit store", "fruit_store");
-			m.add("household store", "household_store");
+			m.add("survival store", "survival_store");
 			m.add("team store", "team_store");
-			m.add("jewelry", "jewelry");
+			m.add("tech store", "technology_store");
+			m.add("tobaco store", "tobacconist_store");
+			//m.add("vehicle store", "vehicle_store");
+			m.add("weapon store", "weapon_store");
 			m.send(p.peer_id);
 		} else if (parsed[2] == "candle") {
 			if (can_use_item_at(p.x, p.y, p.z, maps[get_map_index(p.map)], parsed[2]) == false) {
@@ -2296,7 +2302,7 @@ void player_event(player@p, string event) {
 		directory_create("maps/" + mapname);
 		file f;
 		f.open("maps/" + mapname + "/!.map", "wb");
-		f.write("mapname:" + mapname + "\nminx:0\nmaxx:25\nminy:0\nmaxy:25\nminz:0\nmaxz:10\ntile:0:25:0:25:0:0:hardwood\nowner:" + p.name + "\nlitem:1\nstarting_point:0:25:0:25:0:0\ndeathpoint:0:25:0:25:0:0\nzone:0:25:0:25:0:10:" + name + "\nsrc:0:25:0:25:0:10:0:100:calm.ogg\nzone:0:0:0:0:0:10:exit door:trackme\n\rain:raininterior.ogg\nwind:silence.ogg\nnight:silence.ogg\nitem_usage_restriction:0:25:0:25:0:10:golden_gate_house:rosehaven_house:beehive:store:locker:fridge:microwave:sky_racer:ford:sorento:dogan_slx:grayhound_bus:m60_tank:tank:truck:v4_by_4_jeep:dodge_charger:doom_buggy:ford_pickup_truck:mlk_mission_cruiser:muscle_car:generic_motorcycle:frog_motorcycle:ducati_street_fighter:onda_cbr_600:yamaha_r6:aprilia_v4:aprilia_rs660:ducati_diavel:yamaha_off_road:kawasaki_hipersport:kawasaki_adventure_tourer:ducati_scrumbler:bmw_off_road:motor_boat");
+		f.write("mapname:" + mapname + "\nminx:0\nmaxx:25\nminy:0\nmaxy:25\nminz:0\nmaxz:10\ntile:0:25:0:25:0:0:hardwood\nowner:" + p.name + "\nlitem:1\nstarting_point:0:25:0:25:0:0\ndeathpoint:0:25:0:25:0:0\nzone:0:25:0:25:0:10:" + name + "\nsrc:0:25:0:25:0:10:0:100:calm.ogg\nzone:0:0:0:0:0:10:exit door:trackme\n\rain:telha2.ogg\nwind:silence.ogg\nnight:silence.ogg\nitem_usage_restriction:0:25:0:25:0:10:golden_gate_house:rosehaven_house:beehive:store:locker:fridge:microwave:sky_racer:ford:sorento:dogan_slx:grayhound_bus:m60_tank:tank:truck:v4_by_4_jeep:dodge_charger:doom_buggy:ford_pickup_truck:mlk_mission_cruiser:muscle_car:generic_motorcycle:frog_motorcycle:ducati_street_fighter:onda_cbr_600:yamaha_r6:aprilia_v4:aprilia_rs660:ducati_diavel:yamaha_off_road:kawasaki_hipersport:kawasaki_adventure_tourer:ducati_scrumbler:bmw_off_road:motor_boat");
 		f.close();
 		init_mapsystem();
 		spawn_playerstore(p.x, p.y, p.z, p.map, p.name, name, 40000, mapname);
