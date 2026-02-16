@@ -1,5 +1,30 @@
+## Changes in 2.49.5
+- Added a new sound for auction canceling thanks to the Charry's feedback.
+- You can now restrict dropping items on the ground! The newly added item drop restriction in the Build menu allows you to either restrict all items or create a list of items that are allowed to be dropped, automatically restricting all others. Say goodbye to cozy house spammers!
+- Added look restriction zones! Map builders can now define specific areas where the look command is restricted. Within these zones, players will be unable to see the area's contents or descriptions unless they are specifically authorized. When creating a look restriction zone, you can also provide a whitelist of usernames who are allowed to bypass the restriction. This is a powerful tool for creating private rooms, secret areas, or staff-only locations within your maps.
+- Optimized the spyglass system for much better performance and smoother scanning.
+- Fixed a bug that prevented jumping at negative coordinates.
+- Changed the most input boxes to better ones.
+- Fixed an issue where logs were not saved when using the restart the game option in the main menu.
+- Fixed a bug that was preventing the game's volume from being increased or decreased.
+- Fixed a bug that caused game settings to reset.
+- Fixed elevator and floor building in 2d maps.
+- Completely redesigned tile and zone tracking menus. They now open only when trackable objects exist, and the Stop tracking option appears only while actively tracking something.
+- Added back the inventory drop confirmation.
+- Fixed a bug where the camera and spyglass failed to see platforms at intermediate directions like Northeast, Southwest, etc.
+- Added selection points. This feature will increase your map building speed.
+- Fixed buffer muting.
+- Added a new buffer called team events. Team points now drop into this buffer. If you do not want to receive team points, you can mute this buffer.
+- Added Team Menu! Pressing Alt+F now opens the team menu, where you can easily handle all of your team's operations and settings.
+- Fixed the fishing coordinate. You cannot fish in any water tiles like before.
+- Added a learn game sounds option in the misc submenu.
+- Now you can restart the game from the main menu. The option is in the misc submenu.
+- Added message channel navigation! When the message field is open, pressing Tab now toggles between different channels and recipients in the list, allowing you to quickly define the message destination before sending.
+- Private message fields now support multiline.
+- Rewritten all build menu items so that they can be navigated using tab and shift tab keys instead of pressing enter.
+
 ## Changes in 2.49.1
--fixes for some spelling error for item giver/taker door
+- Fixes for some spelling error for item giver/taker doors.
 - Server restart notifications are now non-blocking: the client announces the reason and automatically reconnects.
 - Fixed the "Ask on exit" setting logic in the options menu.
 - Fixed a client crash related to dreaming sounds. Thanks "alan".

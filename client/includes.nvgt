@@ -1,6 +1,6 @@
 #include "includes/inv.nvgt"
 #include "includes/camera.nvgt"
-#include "includes/main_loop.nvgt"
+#include "includes/mainloop.nvgt"
 #include "includes/prefs.nvgt"
 #include "includes/misc_functions.nvgt"
 #include "includes/netloop.nvgt"

@@ -37,7 +37,7 @@ void build_menu(player@ p) {
 	a.add("automatic dialog", "automatic_dialog");
 	a.add("checkpoint", "checkpoint");
 	a.add("forcefield", "forcefield");
-	a.add("specified air temperature", "specified_air_temperature");
+	//a.add("specified air temperature", "specified_air_temperature");
 	a.add("teleporter", "teleporter");
 	a.add("nutrition machine", "ntm");
 	a.add("vanishing platform", "vanishing_platform");
@@ -52,8 +52,10 @@ void build_menu(player@ p) {
 		a.add("item", "item");
 	}
 	//if (p.assistant) a.add("item description", "desc_menu");
+	a.add("item drop restriction", "item_drop_restriction");
 	a.add("item usage restriction", "item_usage_restriction");
 	a.add("fire", "firemap");
+	a.add("Look restriction zone", "exlook");
 	if (p.admin) a.add("task status", "task_status");
 	a.add("level", "level");
 	a.add("opening hours", "opening_hours");
@@ -70,7 +72,7 @@ void build_menu(player@ p) {
 	a.add("url", "url");
 	a.add("togglable features", "tf");
 	a.add("toggle losing items after death", "litem");
-	a.add("description", "description");
+	//a.add("description", "description");
 	a.add("add owner", "owner");
 	a.add("remove owner", "removeowner");
 	a.add("add line", "addline");

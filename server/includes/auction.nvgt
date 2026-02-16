@@ -178,7 +178,7 @@ namespace auction {
 					bsend(0, "auctions", "auctionwon" + sndtype, m);
 				} else {
 					if(@a.bidder == null || a.bidder.inv.get_item_amount(a.need) < a.bid || @own == null || own.inv.get_item_amount(a.item) < a.amount) {
-						bsend(0, "auctions", "auctionwon" + sndtype, "Auction canceled: Conditions not met (player offline or insufficient items)");
+						bsend(0, "auctions", "auctioncanceled" + sndtype, "Auction canceled: Conditions not met (player offline or insufficient items)");
 					} else {
 						own.inv_add_item(a.item, -a.amount, false);
 						own.inv_add_item(a.need, a.bid);
@@ -197,7 +197,7 @@ namespace auction {
 		for(uint i=0; i<list.length(); i++) {
 			if(list[i].id == id) {
 				string m = "Auction from " + list[i].owner_name + " canceled: " + msg;
-				bsend(0, "auctions", "auctionwon" + sndtype, m);
+				bsend(0, "auctions", "auctioncanceled" + sndtype, m);
 				list.remove_at(i);
 				save();
 				return;
@@ -207,7 +207,7 @@ namespace auction {
 	void cancel_all(string msg = "By staff") {
 		list.resize(0);
 		save();
-		if(msg != "") bsend(0, "auctions", "auctionwon" + sndtype, "All auctions canceled: " + msg);
+		if(msg != "") bsend(0, "auctions", "auctioncanceled" + sndtype, "All auctions canceled: " + msg);
 	}
 	Auction@ get_auction(int id) {
 		for(uint i=0; i<list.length(); i++) {

@@ -918,7 +918,7 @@ speak("The builder selection points have been cleared");
 	if (alt_is_down() and key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT) and key_pressed(KEY_X))
 		send_reliable(peer_id, "lookstop", 0);
 	if (shift_is_down() and key_up(KEY_LMENU) and key_up(KEY_RMENU) and key_pressed(KEY_X)) {
-		string s = v.input("type your status message here");
+		string s = input("Status", "Type your status message here");
 		if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3)
 			send_reliable(peer_id, "setstatus " + s, 0);
 	}
@@ -1135,7 +1135,7 @@ chat("public chat");
 			( (use == 0 && key_down(KEY_SPACE) && key_up(KEY_LSHIFT) && key_up(KEY_RSHIFT)) ||
 			(use == 1 && shift_down && key_pressed(KEY_SPACE)))
 		);
-		if (jump_key && jumping == false && canjump == true && falling == false && can_move == true && canijumptimer.elapsed > 100 && max.z != 0 && me.z <= max.z && d2dsupport == 0 && sitting == 0 && djump == 0) {
+		if (jump_key && jumping == false && canjump == true && falling == false && can_move == true && canijumptimer.elapsed > 100 && me.z <= max.z && d2dsupport == 0 && sitting == 0 && djump == 0) {
 			if (jumpsound == "random") {
 				string snd = "jump" + random(1, 22) + ".ogg";
 				rvp.play_stationary(snd, false);
@@ -1252,7 +1252,6 @@ chat("public chat");
 			change_master_volume(-1);
 			p.play_stationary("volume_down.ogg", false);
 		}
-		if (key_up(KEY_HOME) or key_up(KEY_END)) writeprefs();
 	} else if (shift_is_down()) {
 		if (key_pressed(KEY_HOME) == false and khome.pressing() and mmusic_volume <= 0)
 			change_music_volume(mmusic_volume + 1);
@@ -1535,7 +1534,7 @@ chat("public chat");
 							move(Up);
 							movecheck();
 						} else {
-							if (jumping == false and canjump == true and falling == false and can_move == true && canijumptimer.elapsed > 50 and max.z != 0 and me.z <= max.z and sitting == 0 and djump == 0 and key_up(KEY_LMENU) and key_up(KEY_RMENU)) {
+							if (jumping == false and canjump == true and falling == false and can_move == true && canijumptimer.elapsed > 50 and me.z <= max.z and sitting == 0 and djump == 0 and key_up(KEY_LMENU) and key_up(KEY_RMENU)) {
 								if (jumpsound == "random") {
 									rvp.play_stationary("jump" + random(1, 22) + ".ogg", false);
 									send_reliable(peer_id, "draw jump" + random(1, 22) + ".ogg", 7);
@@ -1589,7 +1588,7 @@ chat("public chat");
 							move(Up);
 							movecheck();
 						} else {
-							if (jumping == false and canjump == true and falling == false and can_move == true && canijumptimer.elapsed > 50 and max.z != 0 and me.z <= max.z and sitting == 0 and djump == 0 and key_up(KEY_LMENU) and key_up(KEY_RMENU)) {
+							if (jumping == false and canjump == true and falling == false and can_move == true && canijumptimer.elapsed > 50 and me.z <= max.z and sitting == 0 and djump == 0 and key_up(KEY_LMENU) and key_up(KEY_RMENU)) {
 								if (jumpsound == "random") {
 									rvp.play_stationary("jump" + random(1, 22) + ".ogg", false);
 									send_reliable(peer_id, "draw jump" + random(1, 22) + ".ogg", 7);

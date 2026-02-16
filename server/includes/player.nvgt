@@ -986,7 +986,7 @@ class player {
 				health = 0;
 			}
 		}
-		if (healthtimer.elapsed >= 5000 and health <= maxhealth - 1) {
+		if (healthtimer.elapsed >= 5000 and health > 0 and health <= maxhealth - 1) {
 			healthtimer.restart();
 			health += 10;
 		}
@@ -2324,7 +2324,12 @@ void handle_activity(player@ p, int channel, string message) {
 	}
 	if (p.afking && channel <= 6) {
 		p.afking = false;
+		p.afk = false;
+		send_packet(6, "play afkoff.ogg " + p.x + " " + p.y + " " + p.z, p.x, p.y, p.z, maps[get_map_index(p.map)]);
 		send_reliable(p, "error! " + p.nickname + ", please don't touch your keyboard while going afk!", 2);
+		write_to(p.name, "afk.usr", p.afk);
+		write_to(p.name, "afkseconds.usr", p.afkseconds);
+		p.afktitle = "";
 	}
 }
 double player_last_sec(string who) {
@@ -2383,7 +2388,7 @@ bool handle_pm(player@ p, string target_name, string msg, bool is_reply = false)
 			if (f.open("chars/" + pn + "/pms.usr", "ab")) {
 				f.write(p.name + ";" + p.nickname + ";" + (is_reply ? "1" : "0") + ";" + msg + "\r\n");
 				f.close();
-				bsend(p.peer_id, "private messages", "pm.ogg", "Your message to " + pn + " (offline) was sent: " + msg);
+				bsend(p.peer_id, "private messages", "pm1.ogg", "Your message to " + pn + " (offline) was sent: " + msg);
 				log(p.name + "_pm", "To " + pn + " (offline): " + msg);
 				return true;
 			} else {

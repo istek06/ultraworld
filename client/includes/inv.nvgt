@@ -231,13 +231,11 @@ void inventorymenu(string cat, double maincount = 0) {
 								speak("Amount is required");
 								f.focus_control(am, false, false);
 								continue;
-							}
-							else if (need.text == "") {
+							} else if (need.text == "") {
 								speak("What do you need is required");
 								f.focus_control(need, false, false);
 								continue;
-							}
-							else if (bid.text == "") {
+							} else if (bid.text == "") {
 								speak("Minimum bid is required");
 								f.focus_control(bid, false, false);
 								continue;
@@ -255,7 +253,7 @@ void inventorymenu(string cat, double maincount = 0) {
 					speak("this compartment is empty");
 				else {
 					if (shift_is_down() or key_down(KEY_RSHIFT)) {
-						string stuff = v.input("How many would you like to drop?");
+						string stuff = input("drop", "How many would you like to drop?");
 						int s = string_to_number(stuff);
 						if (s > 0)
 							drop(parameters[counter].name, s);
