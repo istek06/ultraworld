@@ -857,38 +857,31 @@ void mainmenu(bool fromgame = false) {
 		writeprefs();
 		if (fromgame) mainmenu(true);
 		else mainmenu();
-	}
-	else if(result=="misc:donate") {
+	} else if(result=="misc:donate") {
 		urlopen(app.donate);
 		mainmenu();
-	}
-		else if(result=="misc:Learn game sounds menu") {
+	} else if(result=="misc:Learn game sounds menu") {
 		lgs();
-		}
-	else if(result=="misc:open website") {
+	} else if(result=="misc:open website") {
 		urlopen(app.website);
 		mainmenu();
-	}
-		else if(result=="misc:Restart the game")
-{
-if (!SCRIPT_COMPILED)
-{
-writeprefs();
-wait(50);
-speak("Restarting.");
-run("C:/nvgt/nvgtw.exe","uw.nvgt",false, false);
-exit();
-}
-else
-{
-writeprefs();
-wait(50);
-speak("Restarting.");
-run("uw.exe","",false, false);
-exit();
-}
+	} else if(result=="misc:Restart the game") {
+		if (!SCRIPT_COMPILED) {
+			writeprefs();
+			wait(50);
+			speak("Restarting.");
+			run("C:/nvgt/nvgtw.exe","uw.nvgt",false, false);
+			if (autologin == 0 and importbufferlogs == 1) export_all_buffers();
+			exit();
+		} else {
+			writeprefs();
+			wait(50);
+			speak("Restarting.");
+			run("uw.exe","",false, false);
+			if (autologin == 0 and importbufferlogs == 1) export_all_buffers();
+			exit();
 		}
-	else if(result=="misc:Check for updates") {
+	} else if(result=="misc:Check for updates") {
 		s.fade_music(20);
 		if (check_updates() != 0) mainmenu();
 	} else if (result == "misc:exit") {
@@ -2912,15 +2905,28 @@ string joyinfo(small joy) {
 	return o;
 }
 void checkarroundmenu() {
+	uint count = 0;
+	for (uint i = 0; i < zones.length(); i++) {
+		if (zones[i].trackable)
+		count++;
+	}
+	if (count < 1) {
+		speak("There are no trackable zones in your location.");
+		ztrackx = -1; ztracky = -1; ztrackz = -1; ztracking = "";
+		return;
+	}
 	menuitem@[] cs(0);
-	cs.insert_last(menuitem("Stop tracking", "stoptrack"));
+	if (ztrackx != -1 || ztracky != -1 || ztrackz != -1 || ztracking != "") {
+		cs.insert_last(menuitem("Stop tracking", "stoptrack"));
+	}
 	foreach (zone@ l: zones) {
 		if (!l.trackable) continue;
 		if (dcoordinates == 0) cs.insert_last(menuitem(l.text + " at " + l.minx + ", " + l.miny + ", " + l.minz, l.id));
 		else cs.insert_last(menuitem(l.text, l.id));
 	}
-	string mres = menu("Find what?", cs);
-	if (mres == "" or mres == "stoptrack") {
+	string mres = menu("There are " + count + " trackable zones in your location. Which one would you like to track?", cs);
+	if (mres == "") return;
+	if (mres == "stoptrack") {
 		speak("Stopped tracking");
 		ztrackx = -1; ztracky = -1; ztrackz = -1; ztracking = "";
 		return;
@@ -2939,23 +2945,35 @@ void checkarroundmenu() {
 	}
 }
 void checkarroundtilesmenu() {
-	setupmenu(false, true);
-	m.add_item_tts("Stop tracking", "stoptrack");
+	uint count = 0;
+	for (uint i = 0; i < tiles.length(); i++) {
+		if (tiles[i].trackable)
+		count++;
+	}
+	if (count < 1) {
+		speak("There are no trackable tiles in your location.");
+		ttrackx = -1; ttracky = -1; ttrackz = -1; ttracking = "";
+		return;
+	}
+	menuitem@[] cs(0);
+	if (ttrackx != -1 || ttracky != -1 || ttrackz != -1 || ttracking != "") {
+		cs.insert_last(menuitem("Stop tracking", "stoptrack"));
+	}
 	foreach (tile@ l: tiles) {
 		if (!l.trackable) continue;
 		string t = gettile(l.type);
 		if (t == "") t = "air";
-		if (dcoordinates == 0) m.add_item_tts(t + " at " + l.minx + ", " + l.miny + ", " + l.minz, l.id);
-		else m.add_item_tts(t, l.id);
+		if (dcoordinates == 0) cs.insert_last(menuitem(t + " at " + l.minx + ", " + l.miny + ", " + l.minz, l.id));
+		else cs.insert_last(menuitem(t, l.id));
 	}
-	m.set_callback(netclb, "");
-	int mres = m.run("Find what?", true);
-	if (m.get_item_name(mres) == "" or m.get_item_name(mres) == "stoptrack" or mres == 0) {
+	string mres = menu("There are " + count + " trackable tiles in your location. Which one would you like to track?", cs);
+	if (mres == "") return;
+	if (mres == "stoptrack") {
 		speak("Stopped tracking");
 		ttrackx = -1; ttracky = -1; ttrackz = -1; ttracking = "";
 		return;
 	} else {
-		int t = get_tile_index(m.get_item_name(mres));
+		int t = get_tile_index(mres);
 		if (t > -1) {
 			tile@ tt = @tiles[t];
 			ttrackx = tt.minx;

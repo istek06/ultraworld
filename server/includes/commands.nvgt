@@ -1345,7 +1345,7 @@ void command(player@p, string command) {
 					f.open("chars/" + parsed[1] + "/warns.usr", "wb");
 					f.write(warnlevel);
 					f.close();
-					send_reliable(players[index2], "warning! you have receaved warning from " + p.name + " at level" + warnlevel + " " + warn_message, 2);
+					send_reliable(players[index2], "warning! you received a warning from the staff at level " + warnlevel + ": Reason: " + warn_message, 2);
 					asttell(p.name + " just gave a level " + warnlevel + " warning to " + players[index2].nickname + " (" + players[index2].name + "): " + warn_message);
 					//instant_notify(p.name+" just gave a level "+warnlevel+" warning to "+players[index2].name+" "+warn_message);
 				} else
@@ -1952,12 +1952,26 @@ void command(player@p, string command) {
 				}
 			}
 		}
-	} else if (parsed[0] == "/jailtime" ){
-		if (p.prison == true) {
-			string remaining_time = ms_to_readable_time(p.prisontr - p.prisontimer.elapsed);
-			send_reliable(p, "Jailed for " + ms_to_readable_time(p.prisontr) + ". Jail time remaining: " + remaining_time, 2);
+	} else if (parsed[0] == "/jailtime") {
+		if (parsed.length() > 1 && p.assistant) {
+			int index2 = get_player_index_from(parsed[1]);
+			if (index2 < 0) {
+				send_reliable(p, "Player not found", 0);
+				return;
+			}
+			if (players[index2].prison == true) {
+				string remaining_time = ms_to_readable_time(players[index2].prisontr - players[index2].prisontimer.elapsed);
+				send_reliable(p, players[index2].name + " is jailed for " + ms_to_readable_time(players[index2].prisontr) + ". Remaining time: " + remaining_time, 2);
+			} else {
+				send_reliable(p, players[index2].name + " is not in jail", 2);
+			}
 		} else {
-			send_reliable(p, "You are not in jail", 2);
+			if (p.prison == true) {
+				string remaining_time = ms_to_readable_time(p.prisontr - p.prisontimer.elapsed);
+				send_reliable(p, "Jailed for " + ms_to_readable_time(p.prisontr) + ". Jail time remaining: " + remaining_time, 2);
+			} else {
+				send_reliable(p, "You are not in jail", 2);
+			}
 		}
 	} else if (parsed[0] == "/jaillist") {
 		if (p.assistant)
@@ -2296,7 +2310,7 @@ void command(player@p, string command) {
 				int something = a.find(players[ind].map);
 				if (something > -1) {
 					if (players[ind].gender == 0)players[ind].gender2 = "his";
-					else players[ind].gender2 = "shis";
+					else players[ind].gender2 = "her";
 					send_reliable(p, "you can't look at someone when " + players[ind].gender2 + " is doing a task map", 2);
 					return;
 				}
@@ -2305,7 +2319,9 @@ void command(player@p, string command) {
 				else if (players[ind].is_trusted(p) == false and p.is_admin() == false)
 					send_reliable(p, "error: " + players[ind].name + " doesn't trust you", 2);
 				else if (players[ind].looking == p.name)
-					send_reliable(p, "Error: You can't look whos already looking at you, tell him to stop looking first", 2);
+					send_reliable(p, "Error: You can't look who's already looking at you, tell him to stop looking first", 2);
+				else if (p.manager == false and !can_look_at(players[ind].x, players[ind].y, players[ind].z, get_map_obj(players[ind].map), p.name))
+					send_reliable(p, players[ind].name + " is in a restricted zone that has disabled the ability to look", 2);
 				else {
 					write_to(p.name, "oldx.usr", p.x);
 					write_to(p.name, "oldy.usr", p.y);
@@ -2375,7 +2391,7 @@ void command(player@p, string command) {
 				p.safetimer.pause();
 				p.safetimer.force(0);
 				p.safe = false;
-				send_reliable(e.peer_id, "You are know longer safe.", 2);
+				send_reliable(e.peer_id, "You are no longer safe.", 2);
 				send_reliable(e.peer_id, "play_s pvpoff.ogg", 6);
 			} else {
 				p.safetimer.pause();
@@ -2391,7 +2407,7 @@ void command(player@p, string command) {
 					players[index2].safetimer.pause();
 					players[index2].safetimer.force(0);
 					players[index2].safe = false;
-					send_reliable(p, "" + players[index2].name + " is know longer safe.", 2);
+					send_reliable(p, "" + players[index2].name + " is no longer safe.", 2);
 				} else {
 					players[index2].safetimer.pause();
 					players[index2].safetimer.force(0);
@@ -2408,7 +2424,7 @@ void command(player@p, string command) {
 				send_reliable(p, "thirst timer control has been enabled", 2);
 			} else {
 				p.thirstt = 0;
-				send_reliable(p, "thirst timer control has been desabled", 2);
+				send_reliable(p, "thirst timer control has been disabled", 2);
 			}
 		} else if (parsed.length() >= 2) {
 			int index2 = get_player_index_from(parsed[1]);
@@ -2418,7 +2434,7 @@ void command(player@p, string command) {
 					send_reliable(p, "" + players[index2].name + "'s thirst timer control has been enabled", 2);
 				} else {
 					players[index2].thirstt = 0;
-					send_reliable(p, "" + players[index2].name + "'s thirst timer control has been desabled", 2);
+					send_reliable(p, "" + players[index2].name + "'s thirst timer control has been disabled", 2);
 				}
 			}
 		}
@@ -2429,7 +2445,7 @@ void command(player@p, string command) {
 				send_reliable(p, "hunger timer control has been enabled", 2);
 			} else {
 				p.hungerr = 0;
-				send_reliable(p, "hunger timer control has been desabled", 2);
+				send_reliable(p, "hunger timer control has been disabled", 2);
 			}
 		} else if (parsed.length() >= 2) {
 			int index2 = get_player_index_from(parsed[1]);
@@ -2439,7 +2455,7 @@ void command(player@p, string command) {
 					send_reliable(p, "" + players[index2].name + "'s hunger timer control has been enabled", 2);
 				} else {
 					players[index2].hungerr = 0;
-					send_reliable(p, "" + players[index2].name + "'s hunger timer control has been desabled", 2);
+					send_reliable(p, "" + players[index2].name + "'s hunger timer control has been disabled", 2);
 				}
 			}
 		}
@@ -2521,7 +2537,7 @@ void command(player@p, string command) {
 					}
 				}
 				cmenu m;
-				m.intro = "Are you sure you would like to turn on your pvp? other players can attack you and kill you, you can't disable it for 30 minutes and you shouldn't be attacked or loos health in all that time.";
+				m.intro = "Are you sure you would like to turn on your pvp? other players can attack you and kill you, you can't disable it for 30 minutes and you shouldn't be attacked or lose health in all that time.";
 				m.initial_packet = "confirm_pvp_on";
 				m.add("Yes", "yes");
 				m.add("No", "no");
@@ -3816,6 +3832,7 @@ void command(player@p, string command) {
 		}
 		d.add_member(p.name, false);
 		d.transmit2(p.name + " joined this team through invitation!", "teamn", "teamadd.ogg");
+		p.teamname = d.id;
 		p.team_invite = "";
 		return;
 	} else if (parsed[0] == "/rti") {

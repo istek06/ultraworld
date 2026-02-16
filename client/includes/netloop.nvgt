@@ -419,6 +419,8 @@ void netloop() {
 					buildcheckpoint();
 				} else if (parsed[0] == "buildfiremap") {
 					buildfiremap();
+				} else if (parsed[0] == "buildexlook") {
+					buildexlook();
 				} else if (parsed[0] == "buildtoilet") {
 					buildtoilet();
 				} else if (parsed[0] == "buildtrashcan") {
@@ -468,6 +470,8 @@ void netloop() {
 					buildtimedmusic();
 				} else if (parsed[0] == "builditem") {
 					builditem();
+				} else if (parsed[0] == "builditem_drop_restriction") {
+					builditem_drop_restriction();
 				} else if (parsed[0] == "builditem_usage_restriction") {
 					builditem_usage_restriction();
 				} else if (parsed[0] == "buildAI") {

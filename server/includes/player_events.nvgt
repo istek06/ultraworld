@@ -195,7 +195,7 @@ void player_event(player@p, string event) {
 		int id = string_to_number(parsed[1]);
 		show_user_feedback_options(p, id);
 	} else if (parsed[0] == "feedback_user_action" && parsed.length() > 2) {
-		if (parsed[1] == "[back]") {
+		if (parsed[2] == "[back]") {
 			p.sendpacket("canceled", 0);
 			return;
 		}
@@ -214,7 +214,7 @@ void player_event(player@p, string event) {
 		int id = string_to_number(parsed[1]);
 		show_admin_feedback_options(p, id);
 	} else if (parsed[0] == "feedback_admin_action" && parsed.length() > 2) {
-		if (parsed[1] == "[back]") {
+		if (parsed[2] == "[back]") {
 			p.sendpacket("canceled", 0);
 			return;
 		}
@@ -1650,6 +1650,10 @@ void player_event(player@p, string event) {
 			send_reliable(p, "You can't delete " + parsed[2] + "", 2);
 			return;
 		}
+		if (can_drop_item_at(p.x, p.y, p.z, maps[get_map_index(p.map)], parsed[2]) == false) {
+			send_reliable(p, "you can't drop your " + parsed[2] + " here!", 2);
+			return;
+		}
 		if (parsed[2] == "locker") {
 			if (can_use_item_at(p.x, p.y, p.z, maps[get_map_index(p.map)], parsed[2]) == false) {
 				send_reliable(p, "you can't put your " + parsed[2] + " here", 2);
@@ -1809,7 +1813,7 @@ void player_event(player@p, string event) {
 			send_reliable(p, "Your " + parsed[2] + " has been placed, the code to get in to your house is " + housecode + "", 2);
 		} else if (parsed[2] == "rosehaven_house") {
 			if (p.partner == "") {
-				send_reliable(p, "you can't put your " + parsed[2] + " here when your single", 2);
+				send_reliable(p, "you can't put your " + parsed[2] + " here when you're single", 2);
 				return;
 			}
 			if (can_use_item_at(p.x, p.y, p.z, maps[get_map_index(p.map)], parsed[2]) == false) {
@@ -2421,6 +2425,10 @@ void player_event(player@p, string event) {
 			}
 			if (players[id].looking != "" and p.name != players[id].name and p.is_admin() == false) {
 				send_reliable(p, "error: " + players[id].name + " is looking at someone", 2);
+				return;
+			}
+			if (p.manager == false and !can_look_at(players[id].x, players[id].y, players[id].z, get_map_obj(players[id].map), p.name)) {
+				send_reliable(p, "Error. You cannot see " + players[id].name + "'s location as they are in a restricted zone.", 2);
 				return;
 			}
 			string z = "" + get_zone_at(players[id].x, players[id].y, players[id].z, maps[get_map_index(players[id].map)]);
@@ -3519,7 +3527,7 @@ void player_event(player@p, string event) {
 		directory_create("maps/" + mapname);
 		file f;
 		f.open("maps/" + mapname + "/!.map", "wb");
-		f.write("mapname:" + mapname + "\nminx:" + minx + "\nmaxx:" + maxx + "\nminy:" + miny + "\nmaxy:" + maxy + "\nminz:" + minz + "\nmaxz:" + maxz + "\ntile:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0:" + platform + "\nowner:" + owner + "\nlitem:" + litem + "\nstarting_point:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0\ndeathpoint:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0\nenable:2dsupport");
+		f.write("mapname:" + mapname + "\nminx:" + minx + "\nmaxx:" + maxx + "\nminy:" + miny + "\nmaxy:" + maxy + "\nminz:" + minz + "\nmaxz:" + maxz + "\ntile:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz + ":" + platform + "\nzone:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + maxz + ":" + mapname + "\nowner:" + owner + "\nlitem:" + litem + "\nstarting_point:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz + "\ndeathpoint:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz + "\nenable:2dsupport");
 		f.close();
 		load(mapname);
 		move_player(p, mapname, minx, miny, minz, true);
@@ -3555,7 +3563,7 @@ void player_event(player@p, string event) {
 		directory_create("maps/" + mapname);
 		file f;
 		f.open("maps/" + mapname + "/!.map", "w");
-		f.write("mapname:" + mapname + "\nminx:" + minx + "\nmaxx:" + maxx + "\nminy:" + miny + "\nmaxy:" + maxy + "\nminz:" + minz + "\nmaxz:" + maxz + "\ntile:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0:" + platform + "\nowner:" + owner + "\nlitem:" + litem + "\nstarting_point:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0\ndeathpoint:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":0:0");
+		f.write("mapname:" + mapname + "\nminx:" + minx + "\nmaxx:" + maxx + "\nminy:" + miny + "\nmaxy:" + maxy + "\nminz:" + minz + "\nmaxz:" + maxz + "\ntile:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz + ":" + platform + "\nzone:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + maxz + ":" + mapname + "\nowner:" + owner + "\nlitem:" + litem + "\nstarting_point:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz + "\ndeathpoint:" + minx + ":" + maxx + ":" + miny + ":" + maxy + ":" + minz + ":" + minz);
 		f.close();
 		load(mapname);
 		move_player(p, mapname, minx, miny, minz, true);
@@ -3740,21 +3748,6 @@ void player_event(player@p, string event) {
 				send_reliable(p, "" + maps[mi].name + " is only for players with reinforcement range of " + maps[mi].minreinforcement + " until " + maps[mi].maxreinforcement + "", 2);
 				return;
 			}
-			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 1) {
-					p.pvp = 1;
-					send_reliable(p, "You are now pvp!", 2);
-					send_reliable(0, "play_s pvpon.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
-				}
-			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 0) {
-					p.pvp = 0;
-					send_reliable(p, "You are no longer pvp!", 2);
-					send_reliable(0, "play_s pvpoff.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
-				}
-			}
 			string s = "";
 			string s2;
 			string[] unique_owners;
@@ -3777,6 +3770,21 @@ void player_event(player@p, string event) {
 			bsend(0, "maps", "", p.nickname + " is now visiting the public map " + maps[mi].name + ", created by " + s2 + " " + s);
 			p.finishing_task = false;
 			p.finishtasktimer.restart();
+			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 1) {
+					p.pvp = 1;
+					send_reliable(p, "You are now pvp!", 2);
+					send_reliable(0, "play_s pvpon.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
+				}
+			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 0) {
+					p.pvp = 0;
+					send_reliable(p, "You are no longer pvp!", 2);
+					send_reliable(0, "play_s pvpoff.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
+				}
+			}
 		}
 	} else if (parsed[0] == "taskgo" and parsed.length() > 1) {
 		if (parsed[1] == "back") {
@@ -3822,21 +3830,6 @@ void player_event(player@p, string event) {
 				send_reliable(players[ind], "you've stopped looking at " + p.name + "", 2);
 				send_reliable(p, "" + players[ind].name + " stopped watching you", 2);
 			}
-			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 1) {
-					p.pvp = 1;
-					send_reliable(p, "You are now pvp!", 2);
-					send_reliable(0, "play_s pvpon.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
-				}
-			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 0) {
-					p.pvp = 0;
-					send_reliable(p, "You are no longer pvp!", 2);
-					send_reliable(0, "play_s pvpoff.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
-				}
-			}
 			string s = "";
 			string s2;
 			string[] unique_owners;
@@ -3859,6 +3852,21 @@ void player_event(player@p, string event) {
 			bsend(0, "maps", "", p.nickname + " is now trying to complete task " + maps[mi].name + ". Reward: " + maps[mi].finishamount + " " + maps[mi].finishitem + ". Created by " + s2 + " " + s);
 			p.finishing_task = false;
 			p.finishtasktimer.restart();
+			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 1) {
+					p.pvp = 1;
+					send_reliable(p, "You are now pvp!", 2);
+					send_reliable(0, "play_s pvpon.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
+				}
+			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 0) {
+					p.pvp = 0;
+					send_reliable(p, "You are no longer pvp!", 2);
+					send_reliable(0, "play_s pvpoff.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
+				}
+			}
 		}
 	} else if (parsed[0] == "mapgo" and parsed.length() > 1) {
 		if (parsed[1] == "[back]") {
@@ -3904,21 +3912,6 @@ void player_event(player@p, string event) {
 				send_reliable(players[ind], "you've stopped looking at " + p.name + "", 2);
 				send_reliable(p, "" + players[ind].name + " stopped watching you", 2);
 			}
-			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 1) {
-					p.pvp = 1;
-					send_reliable(p, "You are now pvp!", 2);
-					send_reliable(0, "play_s pvpon.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
-				}
-			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
-				if (p.pvp != 0) {
-					p.pvp = 0;
-					send_reliable(p, "You are no longer pvp!", 2);
-					send_reliable(0, "play_s pvpoff.ogg", 6);
-					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
-				}
-			}
 			string s = "";
 			string s2;
 			string[] unique_owners;
@@ -3940,6 +3933,21 @@ void player_event(player@p, string event) {
 			move_player(p, parsed[1], random(maps[mi].spminx, maps[mi].spmaxx), random(maps[mi].spminy, maps[mi].spmaxy), random(maps[mi].spminz, maps[mi].spmaxz), true);
 			p.finishing_task = false;
 			p.finishtasktimer.restart();
+			if (maps[mi].pvp == 1 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 1) {
+					p.pvp = 1;
+					send_reliable(p, "You are now pvp!", 2);
+					send_reliable(0, "play_s pvpon.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is now pvp!", 2);
+				}
+			} else if (maps[mi].pvp == 2 and maps[mi].pvpminx <= p.x and maps[mi].pvpmaxx >= p.x and maps[mi].pvpminy <= p.y and maps[mi].pvpmaxy >= p.y and maps[mi].pvpminz <= p.z and maps[mi].pvpmaxz >= p.z) {
+				if (p.pvp != 0) {
+					p.pvp = 0;
+					send_reliable(p, "You are no longer pvp!", 2);
+					send_reliable(0, "play_s pvpoff.ogg", 6);
+					send_reliable(0, "" + p.nickname + " is no longer pvp!", 2);
+				}
+			}
 		}
 	} else if (parsed[0] == "fists") {
 		if (parsed[0] != p.weapon_name) {
@@ -4631,6 +4639,8 @@ void player_event(player@p, string event) {
 						send_reliable(p, "buildtimedamb", 0);
 					else if (what == "item")
 						send_reliable(p, "builditem", 0);
+					else if (what == "item_drop_restriction")
+						send_reliable(p, "builditem_drop_restriction", 0);
 					else if (what == "item_usage_restriction")
 						send_reliable(p, "builditem_usage_restriction", 0);
 					else if (what == "AI") {
@@ -4722,6 +4732,8 @@ void player_event(player@p, string event) {
 						send_reliable(p, "buildwashbasin", 0);
 					else if (what == "firemap")
 						send_reliable(p, "buildfiremap", 0);
+					else if (what == "exlook")
+						send_reliable(p, "buildexlook", 0);
 					else if (what == "task_status" and p.is_admin())
 						send_reliable(p, "buildtask_status", 0);
 					else if (what == "shower")
@@ -6178,8 +6190,10 @@ void player_event(player@p, string event) {
 		} else if (ld[0] == "specified_air_temperature" and ld.length() < 8) {
 			send_reliable(p, "maps update error: specified air temperature spawn declaration has too few arguments. Syntax is task_status:minX:maxX:minY:maxY:minZ:maxZ:specified_air_temperature, got " + maptext, 0);
 			return;
-		}
-		else if (ld[0] == "item_usage_restriction" and ld.length() < 8) {
+		} else if (ld[0] == "item_drop_restriction" and ld.length() < 7) {
+			send_reliable(p, "maps update error: item drop restriction spawn declaration has too few arguments. Syntax is item_usage_restriction:minx:maxx:miny:maxy:minz:maxz, got " + maptext, 0);
+			return;
+		} else if (ld[0] == "item_usage_restriction" and ld.length() < 8) {
 			send_reliable(p, "maps update error: item usage restriction spawn declaration has too few arguments. Syntax is item_usage_restriction:minx:maxx:miny:maxy:minz:maxz:items, got " + maptext, 0);
 			return;
 		} else if (ld[0] == "fishingcoordinate" and ld.length() < 6) {
@@ -6375,6 +6389,9 @@ void player_event(player@p, string event) {
 			return;
 		} else if (ld[0] == "specified_air_temperature" and ld.length() < 8) {
 			send_reliable(p, "maps update error: specified air temperature spawn declaration has too few arguments. Syntax is task_status:minX:maxX:minY:maxY:minZ:maxZ:specified_air_temperature, got " + maptext, 0);
+			return;
+		} else if (ld[0] == "item_drop_restriction" and ld.length() < 7) {
+			send_reliable(p, "maps update error: item drop restriction spawn declaration has too few arguments. Syntax is item_drop_restriction:minx:maxx:miny:maxy:minz:maxz, got " + maptext, 0);
 			return;
 		} else if (ld[0] == "item_usage_restriction" and ld.length() < 8) {
 			send_reliable(p, "maps update error: item usage restriction spawn declaration has too few arguments. Syntax is item_usage_restriction:minx:maxx:miny:maxy:minz:maxz:items, got " + maptext, 0);
@@ -9708,11 +9725,11 @@ void player_event(player@p, string event) {
 					p.finishing_task = true;
 					if (maps[pmapind].finishitem == "coins" or maps[pmapind].finishitem == "credit") {
 						p.inv_add_item(maps[pmapind].finishitem, round(maps[pmapind].finishamount - (p.finishtasktimer.elapsed / 1000), 0));
-						send_reliable(p, "as a reward, you've recieved " + round(maps[pmapind].finishamount - (p.finishtasktimer.elapsed / 1000), 0) + " " + maps[pmapind].finishitem + "", 2);
+						send_reliable(p, "as a reward, you've received " + round(maps[pmapind].finishamount - (p.finishtasktimer.elapsed / 1000), 0) + " " + maps[pmapind].finishitem + "", 2);
 						bsend(0, "maps", "", p.name + " finished " + p.map + " in " + ms_to_readable_time(p.finishtasktimer.elapsed) + " and won " + round(maps[pmapind].finishamount - (p.finishtasktimer.elapsed / 1000), 0) + " " + maps[pmapind].finishitem + "!");
 					} else {
 						p.inv_add_item(maps[pmapind].finishitem, maps[pmapind].finishamount);
-						send_reliable(p, "as a reward, you've recieved " + maps[pmapind].finishamount + " " + maps[pmapind].finishitem + "", 2);
+						send_reliable(p, "as a reward, you've received " + maps[pmapind].finishamount + " " + maps[pmapind].finishitem + "", 2);
 						bsend(0, "maps", "", p.name + " finished " + p.map + " in " + ms_to_readable_time(p.finishtasktimer.elapsed) + " and won " + maps[pmapind].finishamount + " " + maps[pmapind].finishitem + "!");
 					}
 					p.finishtasktimer.restart();
@@ -10304,7 +10321,7 @@ void player_event(player@p, string event) {
 			if (something > -1 or something2 > -1 or something3 > -1)
 				send_reliable(p, "you are in " + p.map + " map for " + ms_to_readable_time(p.finishtasktimer.elapsed) + "", 2);
 			else
-				send_reliable(p, "your not in a public, private, or task map", 2);
+				send_reliable(p, "you're not in a public, private, or task map", 2);
 		}
 	} else if (parsed[0] == "track" and parsed.length() > 1) {
 		int index2 = get_player_index_from(parsed[1]);

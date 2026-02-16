@@ -1,12 +1,12 @@
 #include "includes/appinfo.nvgt"
 class application: appinfo {
 	string website = "https://uw.posix.live";
-	string donate = "https://www.paypal.com/paypalme/patricusprod";
+	string donate = "https://www.paypal.me/charanvr1235";
 	application() {
 		super();
 		this.name = "Ultra World";
 		this.shortname = "UW";
 		this.status = "";
-		this.version = "2.49.1";
+		this.version = "2.49.5";
 	}
 }//

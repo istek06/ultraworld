@@ -680,7 +680,7 @@ void netloop() {
 	if (divulgar.elapsed >= random(1150000, 1600000)) {
 		divulgar.restart();
 		string[] msgs;
-		msgs.insert_last("Please log in at least once in 6 months to avoid your account and house being destroyed");
+		msgs.insert_last("Please log in at least once in 3 months to avoid your account and house being destroyed");
 		msgs.insert_last("If you need help, press f7 to send a message to the staff. dont send irrelivent messages.");
 		msgs.insert_last("Love this game? share it to your friends too: https://uw.posix.live");
 		msgs.insert_last("join us on telegram to discuss more about the game: https://t.me/+87hXLwoqOvM4M2Zl");
@@ -688,6 +688,7 @@ void netloop() {
 		msgs.insert_last("To get an account on our team talk server, you can send an admin tell and request an account.");
 		msgs.insert_last("Join us on whatsapp at https://chat.whatsapp.com/LkjhAmvhIK9AZsfTsLj0Bp?mode=ems_share_t");
 		msgs.insert_last("contribute to our game at: https://github.com/kannadiga2104/ultraworld");
+		msgs.insert_last("Please use the /feedback command for your feedback and suggestions to be seen and evaluated by developers more quickly.  Admintell is for contacting an online administrator if you encounter issues or problems.");
 		int frase = random(0, msgs.length() - 1);
 		send_reliable(0, "notify_startrek_chime " + msgs[frase], 0);
 	}
@@ -1278,7 +1279,7 @@ void netloop() {
 							f.close();
 						}
 						if (DATE_DAY == players[index].day and DATE_MONTH == players[index].month and players[index].giftlimit < 1) {
-							send_reliable(players[index], "happy berthday to you " + players[index].name + "!", 2);
+							send_reliable(players[index], "happy birthday to you " + players[index].name + "!", 2);
 							if (players[index].gender == 0)players[index].gender2 = "he";
 							else players[index].gender2 = "she";
 							send_reliable(0, "today is birthday of " + players[index].name + " and " + players[index].gender2 + " is now " + players[index].age + " years old!", 2);
@@ -1291,7 +1292,7 @@ void netloop() {
 							f.open("chars/" + players[index].name + "/eml.usr", "wb");
 							string eml = f.read();
 							f.close();
-							//url_post("http://balls.com/dl/mail.php","who="+eml+"&from=balls.com&name=Ultra World&sub=Happy berthday, "+players[index].name+"!&mess=Hello.\r\nHappy berthday to you "+players[index].name+"!\r\n\r\nThis message was automated by Ultra World. Please do not reply.");
+							//url_post("http://balls.com/dl/mail.php","who="+eml+"&from=balls.com&name=Ultra World&sub=Happy birthday, "+players[index].name+"!&mess=Hello.\r\nHappy birthday to you "+players[index].name+"!\r\n\r\nThis message was automated by Ultra World. Please do not reply.");
 						}
 						if (players[index].langchan == "" or players[index].age == 0 or players[index].country == "" or players[index].day == 0 or players[index].month == 0 or players[index].year == 0)
 							send_reliable(players[index], "You didn't complete your profile yet, please go to your smart phone to complete your profile", 2);

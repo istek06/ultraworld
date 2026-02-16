@@ -158,12 +158,12 @@ class mapdata {
 				spawn_ntm(aa, bb, this.name, id);
 			} else if (parsed[0] == "pvp" and parsed.length() > 7) {
 				if (string_to_number(parsed[1])<min.x or string_to_number(parsed[1])>max.x or string_to_number(parsed[2])<min.x or string_to_number(parsed[2])>max.x or string_to_number(parsed[3])<min.y or string_to_number(parsed[3])>max.y or string_to_number(parsed[4])<min.y or string_to_number(parsed[4])>max.y or string_to_number(parsed[5])<min.z or string_to_number(parsed[5])>max.z or string_to_number(parsed[6])<min.z or string_to_number(parsed[6])>max.z) continue;
-				chminx = string_to_number(parsed[1]);
-				chmaxx = string_to_number(parsed[2]);
-				chminy = string_to_number(parsed[3]);
-				chmaxy = string_to_number(parsed[4]);
-				chminz = string_to_number(parsed[5]);
-				chmaxz = string_to_number(parsed[6]);
+				pvpminx = string_to_number(parsed[1]);
+				pvpmaxx = string_to_number(parsed[2]);
+				pvpminy = string_to_number(parsed[3]);
+				pvpmaxy = string_to_number(parsed[4]);
+				pvpminz = string_to_number(parsed[5]);
+				pvpmaxz = string_to_number(parsed[6]);
 				pvp = string_to_number(parsed[7]);
 			} else if (parsed[0] == "opening_hours" and parsed.length() > 2) {
 				if (string_to_number(parsed[1])<0 or string_to_number(parsed[1])>24 or string_to_number(parsed[2])<0 or string_to_number(parsed[2])>24) continue;
@@ -791,6 +791,62 @@ bool can_spawn_item_at(int x, int y, int z, mapdata@m, string item) {
 	}
 	return ret;
 }
+bool can_drop_item_at(int x, int y, int z, mapdata@m, string what) {
+	string[] tempi;
+	bool ret = true;
+	int ind = get_map_index(m.name);
+	if (ind < 0)
+		return false;
+	string d = maps[ind].rawdata;
+	d.replace_this("\r\n", "\n").replace_this("\r", "");
+	string[] text = string_split(d, "\n");
+	for (uint i = 0; i < text.length(); i++) {
+		string[] parsed = string_split(text[i], ":", false);
+		if (parsed[0] == "item_drop_restriction" and parsed.length() > 6) {
+			int minx = string_to_number(parsed[1]);
+			int maxx = string_to_number(parsed[2]);
+			int miny = string_to_number(parsed[3]);
+			int maxy = string_to_number(parsed[4]);
+			int minz = string_to_number(parsed[5]);
+			int maxz = string_to_number(parsed[6]);
+			if (parsed.length() > 7) {
+				for (uint x = 7; x < parsed.length(); x++)
+					tempi.insert_last(parsed[x].lower());
+			}
+			if (minx <= x and maxx >= x and miny <= y and maxy >= y and minz <= z and maxz >= z and tempi.find(what.lower()) < 0)
+				ret = false;
+		}
+	}
+	return ret;
+}
+bool can_look_at(int x, int y, int z, mapdata@m, string who) {
+	string[] tempi;
+	bool ret = true;
+	int ind = get_map_index(m.name);
+	if (ind < 0)
+		return false;
+	string d = maps[ind].rawdata;
+	d.replace_this("\r\n", "\n").replace_this("\r", "");
+	string[] text = string_split(d, "\n");
+	for (uint i = 0; i < text.length(); i++) {
+		string[] parsed = string_split(text[i], ":", false);
+		if (parsed[0] == "exlook" and parsed.length() > 6) {
+			int minx = string_to_number(parsed[1]);
+			int maxx = string_to_number(parsed[2]);
+			int miny = string_to_number(parsed[3]);
+			int maxy = string_to_number(parsed[4]);
+			int minz = string_to_number(parsed[5]);
+			int maxz = string_to_number(parsed[6]);
+			if (parsed.length() > 7) {
+				for (uint x = 7; x < parsed.length(); x++)
+					tempi.insert_last(parsed[x].lower());
+			}
+			if (minx <= x and maxx >= x and miny <= y and maxy >= y and minz <= z and maxz >= z and tempi.find(who.lower()) < 0)
+				ret = false;
+		}
+	}
+	return ret;
+}
 bool can_spawn_locker_at(int x, int y, int z, mapdata@m) {
 	string[] tempi;
 	bool ret = true;
@@ -820,7 +876,7 @@ bool remove_map(string mapname, bool delete = true) {
 	int id = get_map_index(mapname);
 	bool r = false;
 	for (uint i = 0; i < players.length(); i++) {
-		if (players[i].map == mapname) move_player(players[i], "main_map", random(5, 10), 1, 0);  
+		if (players[i].map == mapname) move_player(players[i], "main_map", random(5, 10), 0, 0);  
 	}
 	map_destroy(mapname);
 	if (id > -1) {

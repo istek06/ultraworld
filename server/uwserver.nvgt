@@ -27,15 +27,14 @@ int chatting = 1;
 int guessthenumber_active = 0, guessthenumber_minutes = 5;
 int szx = 5;
 int szminx = 5;
-washbasin@[] active_washbasins;
-shower@[] active_showers;
-int szy = 1;
+int szy = 0;
 int szmaxx = 5;
 int szy2 = 0;
 string szmap = "main_map";
 int objtime = 3000, maxobjs = 500;
 int cid = -1;
-
+washbasin@[] active_washbasins;
+shower@[] active_showers;
 int filterstuff = 1;
 double servermoney;
 instance uwserverinstance("uwserver.exe");
@@ -1319,7 +1318,7 @@ void create_char(string username, string password, string email, int gender, uin
 		f.write(5);
 		f.close();
 		f.open(charfolder + "/y.usr", "wb");
-		f.write(1);
+		f.write(0);
 		f.close();
 		f.open(charfolder + "/z.usr", "wb");
 		f.write("0");

@@ -4,9 +4,10 @@ To use a command, you can either press `Slash`, type `/` 1 more time, or press t
 ## General Commands
 - `help`: Displays the commands menu. This menu might not update with latest commands.
 - `cmds`: Brings up a dialog in which you can view a list of commands. This is often updated.
-- `changes`: Displays server changelog.
+- `changes`: Displays a menu for viewing server and client changes. Shows the specific changelog if a client or server parameter is provided.
+- `feedback`: Opens feedback menu where you can create and manage your feedbacks.
 - `suicide`: Exits from a private, public, or task map.
-- `xpstatus`: Check which XP is active, i.e. Master, Giga, Super, Mega.
+- `xp`: Check which XP is active, i.e. Master, Giga, Super, Mega.
 - `xppotion`: Check whether you have XP potion used, and displays remaining time if applicable.
 - `playtime`: Combined play time of all players.
 - `status <playername>`: Check the status message of a given player.
@@ -22,9 +23,9 @@ To use a command, you can either press `Slash`, type `/` 1 more time, or press t
 - `omutelist`: Displays players that have muted you.
 - `setonlinemsg <message>`: Sets your online message. Supports message variables.
 - `setofflinemsg <message>`: Sets your offline message. Supports message variables.
-- `feedback`: open feedback menu where you can create and manage your feedback.
 
 ## Team Related Commands
+- `teamcreate <ID> <name-optional>: Creates a team with a given ID. The name is optional and can contain spaces, and will be used to display. The ID is used as the name otherwise.
 - `jointeam <ID> <password>: Joins a team using its ID.
 - `t <message>`: Sends a message to the team.
 - `teams`: Displays all available teams.
@@ -36,11 +37,11 @@ To use a command, you can either press `Slash`, type `/` 1 more time, or press t
 - `getteampass`: Retrieves your team's password (if you are the owner).
 - `changeteampass <password>`: Changes your team's password (if you are the owner).
 - `changeteamleader <name>`: Changes your team's owner to `<name>` (if you are the owner).
+- `teamnickname <nick>`: Changes your team's display name.
 - `atmod <name>`: Promotes a team member as a moderator.
 - `rtmod <name>`: Demotes a team moderator.
 - `tinvite <name>`: Invites a player to your team, if you are a moderator or a leader of the team.
 - `ati`: Accepts a pending team invitation.
 - `rti`: Rejects a pending team invitation.
 - `teamkick <name>`: Removes a member from your team (if you are the owner).
-- `teamcreate <ID> <name-optional>: Creates a team with a given ID. The name is optional and can contain spaces, and will be used to display. The ID is used as the name otherwise.
 - `team <name>`: Check if a given player has a team, and in which if they have.
