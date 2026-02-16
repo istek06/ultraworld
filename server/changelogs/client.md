@@ -1,5 +1,5 @@
 ## Changes in 2.49.5
-- updated the sound pack. players can see more new sounds. thanks for players those who contributed for the sounds
+- Updated the sound pack. Players can see more new sounds. Thanks for players those who contributed for the sounds.
 - Added a new sound for auction canceling thanks to the Charry's feedback.
 - You can now restrict dropping items on the ground! The newly added item drop restriction in the Build menu allows you to either restrict all items or create a list of items that are allowed to be dropped, automatically restricting all others. Say goodbye to cozy house spammers!
 - Added look restriction zones! Map builders can now define specific areas where the look command is restricted. Within these zones, players will be unable to see the area's contents or descriptions unless they are specifically authorized. When creating a look restriction zone, you can also provide a whitelist of usernames who are allowed to bypass the restriction. This is a powerful tool for creating private rooms, secret areas, or staff-only locations within your maps.
@@ -13,6 +13,7 @@
 - Completely redesigned tile and zone tracking menus. They now open only when trackable objects exist, and the Stop tracking option appears only while actively tracking something.
 - Added back the inventory drop confirmation.
 - Fixed a bug where the camera and spyglass failed to see platforms at intermediate directions like Northeast, Southwest, etc.
+- Fixed a bug where auto loggin being enabled caused exiting from the game doesn't return back to the main menu, it would exit the client directly. That shouldn't be the case.
 - Added selection points. This feature will increase your map building speed.
 - Fixed buffer muting.
 - Added a new buffer called team events. Team points now drop into this buffer. If you do not want to receive team points, you can mute this buffer.
