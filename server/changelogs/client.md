@@ -13,6 +13,7 @@
 - Completely redesigned tile and zone tracking menus. They now open only when trackable objects exist, and the Stop tracking option appears only while actively tracking something.
 - Added back the inventory drop confirmation.
 - Fixed a bug where the camera and spyglass failed to see platforms at intermediate directions like Northeast, Southwest, etc.
+- added nutritional machine in the builder menu.
 - Fixed a bug where auto loggin being enabled caused exiting from the game doesn't return back to the main menu, it would exit the client directly. That shouldn't be the case.
 - Added selection points. This feature will increase your map building speed.
 - Fixed buffer muting.
