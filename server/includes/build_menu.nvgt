@@ -91,6 +91,6 @@ void build_menu(player@ p) {
 	a.add("get map data", "gmd");
 	a.add("put map data", "pmd");
 	if (p.admin) a.add("new map", "newmap");
-	if (in_house(p) < 0 && in_apartment(p) < 0 && in_tent(p) < 0) a.add("delete this map", "deletemap");
+	if (in_house(p) < 0 && in_apartment(p) < 0) a.add("delete this map", "deletemap");
 	a.send(p.peer_id);
 }

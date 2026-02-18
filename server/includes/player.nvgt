@@ -928,27 +928,27 @@ class player {
 			if (drunkacttimer.elapsed >= drunkacttime) {
 				drunkacttime = random(8000, 13000);
 				drunkacttimer.restart();
-				int action = random(1, 7);
-				if (action == 1) {
+				int action = random(2, 8);
+				if (action == 2) {
 					send_reliable(peer_id, "You feel so dizzy you lose your balance again!", 2);
 					spawn_bodyfall(x, y, z, map, 0, "gt", 100, 0, get_player_index_from(name));
-				} else if (action == 2) {
+				} else if (action == 3) {
 					send_reliable(peer_id, "You grab your stomach and bend over, suddenly you throw up!", 2);
 					send_packet(6, "play vomit.ogg " + x + " " + y + " " + z, x, y, z, maps[get_map_index(map)]);
 					if (thirstt == 0) thirst += random(35, 120);
 					if (hungerr == 0) hunger += random(15, 70);
 					vomited = true;
-				} else if (action == 3) {
+				} else if (action == 4) {
 					string sf = random_string_from_array(randsounds);
 					send_reliable(peer_id, "play_s " + sf + ".ogg", 6);
-				} else if (action == 4)
+				} else if (action == 5)
 					send_reliable(peer_id, "speed_drink1", 0);
-				else if (action == 5)
+				else if (action == 6)
 					send_reliable(peer_id, "speed_drink0", 0);
-				else if (action == 6) {
+				else if (action == 7) {
 					if (thirstt == 0) thirst += random(5, 50);
-				} else if (action == 7) {
-					if (hungerr == 0) hunger += random(3, 45);
+				} else if (action == 8) {
+					if (hungerr == 0) hungerr += random(3, 45);
 				}
 			}
 			if (whiledrunktimer.elapsed >= 32000) {
