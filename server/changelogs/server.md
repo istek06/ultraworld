@@ -1,3 +1,13 @@
+## Changes on Wednesday, February 18, 2026
+- Fixed an issue where hunger would not increase while drunk.
+- Fixed the zone issue in the partner house of the armrest of the couch.
+- Crafting ammos will now give some amounts of xp.
+- Added a new command for developers to update changelogs on the server.
+
+## Changes on Tuesday, February 17, 2026
+- The map deletion option will no longer appear in the build menu while inside a tent, consistent with houses and apartments.
+- Fixed a bug that prevented players from walking when their away status was active and the connection was lost or the server was restarted.
+
 ## Changes on Monday, February 16, 2026
 - Version 2.49.5 has been released.
 
