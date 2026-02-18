@@ -41,6 +41,26 @@ void command(player@p, string command) {
 			p.finishtasktimer.force(0);
 			p.finishtasktimer.pause();
 		}
+	} else if (parsed[0] == "/changelog" && p.is_dev()) {
+		if (parsed.length() < 3) {
+			send_reliable(p, "Usage: /changelog <client|server> <text>", 2);
+			return;
+		}
+		string type = string_to_lower_case(parsed[1]);
+		if (type != "client" && type != "server") {
+			send_reliable(p, "Invalid type. Use client or server.", 2);
+			return;
+		}
+		string filename = "changelogs/" + type + ".md";
+		string new_entry = string_trimleft(command, (parsed[0] + " " + parsed[1] + " ").length());
+		string old_content = file_get_contents(filename);
+		file f;
+		f.open(filename, "wb");
+		f.write(new_entry + "\n\n" + old_content);
+		f.close();
+		admintell(p.name + " updated the " + type + " changelog with the following content: " + new_entry);
+		send_reliable(p, type + " changelog updated.", 2);
+		return;
 	} else if (parsed[0] == "/changes") {
 		if (parsed.length() == 1) {
 			cmenu m;
@@ -74,6 +94,31 @@ void command(player@p, string command) {
 		i.multiline = 1;
 		i.send(p.peer_id);
 		return;
+	} else if (parsed[0] == "/ufile" && p.is_dev()) {
+		if (parsed.length() < 2) {
+			send_reliable(p, "Usage: /ufile <filename> [content]", 2);
+			return;
+		}
+		string filename = parsed[1];
+		if (parsed.length() == 2) {
+			string file_data = file_get_contents(filename);
+			if (file_data != "") {
+				send_reliable(p, "clip " + file_data, 0);
+				send_reliable(p, filename + " content sent to clipboard.", 2);
+			} else {
+				send_reliable(p, "error: " + filename + " is empty or does not exist.", 2);
+			}
+			return;
+		} else {
+			string new_content = string_trimleft(command, (parsed[0] + " " + parsed[1] + " ").length());
+			file f;
+			f.open(filename, "wb");
+			f.write(new_content);
+			f.close();
+			admintell(p.name + " updated the file: " + filename);
+			send_reliable(p, filename + " updated successfully.", 2);
+			return;
+		}
 	} else if (parsed[0] == "/xp") {
 		if (parsed.length() == 1 || parsed[1] == "status") {
 			p.sendpacket(get_xp_status_message(), 2);
