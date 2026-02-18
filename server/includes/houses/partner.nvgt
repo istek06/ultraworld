@@ -223,7 +223,7 @@ tile:26:30:82:85:3:3:carpet12
 tile:27:29:83:85:3:3:air
 tile:27:29:83:85:2:2:cloth
 zone:26:30:82:82:3:10:backrest of the couch
-zone:26:30:83:85:3:10:armrest of the ccouch
+zone:26:30:83:85:3:10:armrest of the couch
 zone:27:29:83:85:2:10:on a fluffy cumfy brown couch.:trackme
 bed:27:29:83:85:2:10
 zone:49:55:82:86:0:20:near a fluffy and cumfy brown couch
@@ -232,7 +232,7 @@ tile:50:54:82:85:3:3:carpet12
 tile:51:53:83:85:3:3:air
 tile:51:53:83:85:2:2:cloth
 zone:50:54:82:82:3:10:backrest of the couch
-zone:50:54:83:85:3:10:armrest of the ccouch
+zone:50:54:83:85:3:10:armrest of the couch
 zone:51:53:83:85:2:10:on a fluffy cumfy brown couch.:trackme
 bed:51:53:83:85:2:10
 ##the coffee table

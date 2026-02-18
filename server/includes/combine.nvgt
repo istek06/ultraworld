@@ -535,6 +535,7 @@
 					send_packet(6, "play get5.56mm_ammo.ogg " + p.x + " " + p.y + " " + p.z, p.x, p.y, p.z, maps[get_map_index(p.map)]);
 					p.inv_add_item("5.56mm_ammo", 1);
 					p.inv_add_item("broken_ammo", -1);
+	givexp(p,p.reinforcement*9*10+p.level+random(1000000,5000000));
 					if (lefthand == "broken_ammo")
 						send_reliable(p, "hempty 1", 0);
 					else
@@ -555,6 +556,7 @@
 					p.inv_add_item("7.62mm_ammo", 1);
 					p.inv_add_item("broken_ammo", -1);
 					p.inv_add_item("stone", -1);
+	givexp(p,p.reinforcement*9*10+p.level+random(1000000,5000000));
 					if (lefthand == "broken_ammo")
 						send_reliable(p, "hempty 1", 0);
 					else
@@ -579,6 +581,7 @@
 					p.inv_add_item("9mm_ammo", 1);
 					p.inv_add_item("broken_ammo", -1);
 					p.inv_add_item("sharpened_stone", -1);
+givexp(p,p.reinforcement*9*10+p.level+random(1000000,5000000));
 					if (lefthand == "broken_ammo")
 						send_reliable(p, "hempty 1", 0);
 					else
@@ -603,6 +606,7 @@
 					p.inv_add_item("12.7mm_ammo", 1);
 					p.inv_add_item("broken_ammo", -1);
 					p.inv_add_item("sharpened_metal", -1);
+	givexp(p,p.reinforcement*9*10+p.level+random(1000000,5000000));
 					if (lefthand == "broken_ammo")
 						send_reliable(p, "hempty 1", 0);
 					else
@@ -627,6 +631,7 @@
 					p.inv_add_item("shotgun_shell", 1);
 					p.inv_add_item("broken_ammo", -1);
 					p.inv_add_item("metal", -1);
+givexp(p,p.reinforcement*9*10+p.level+random(1000000,5000000));
 					if (lefthand == "broken_ammo")
 						send_reliable(p, "hempty 1", 0);
 					else

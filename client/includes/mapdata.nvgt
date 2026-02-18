@@ -524,6 +524,7 @@ wallmetal23
 wallmetalbox
 wallmetalglass
 wallmud
+wwallmuffle
 wallobject
 wallplastic
 wallpole
@@ -546,6 +547,7 @@ wallspaceshipreverb
 wallstand
 wallstone
 wallstone2
+wallstone3
 wallstreet
 walltable
 walltable2
@@ -690,6 +692,7 @@ applause6
 aviao1
 aviaointerno
 avs
+babynoise
 background1
 background2
 background3
@@ -858,6 +861,8 @@ boss2mus
 boss3mus
 bossmusic
 Bridge
+breathing_female
+breth
 Brook
 bubbles
 bubbles2
@@ -1239,6 +1244,7 @@ horses
 horses2
 horse_battle
 hospital
+hospital2
 house
 house2
 household_room

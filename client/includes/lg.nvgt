@@ -14,7 +14,8 @@ void lgs() {
 	sounds.set("You or a player turned off AFK", "afkoff");
 	sounds.set("you or a player starts an auction", "auction");
 	sounds.set("You or a player bids on the auction", "bid");
-	sounds.set("An auction canceld or reset", "auctionwon");
+	sounds.set("An auction canceled", "auctioncanceled");
+	sounds.set("An auction finished", "auctionwon");
 	sounds.set("An important game update from staff", "horn2");
 	sounds.set("A notification from server", "notice");
 	learn_game_sounds lg(sounds,"");

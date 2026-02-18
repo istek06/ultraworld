@@ -9,7 +9,7 @@ Each player must agree to these rules. If you have any issues with these rules o
 7. No empty admin tells. Sending empty spam messages in admin tells is prohibited. Continued violation may result in being jailed.
 8. Cheating is strictly forbidden. You may not cheat or hack the game. This includes, but is not limited to: editing variables, intercepting server data, modifying packets, decrypting sounds or dynamic link libraries, and stealing credentials such as configuration files, usernames, or passwords stored by the game.
 9. Character and housing limits. Players are limited to a maximum of two characters and one house per account. for example,  if you have two characters, they will share the one house.
-10. Please make sure your char logs in at least once every six months to avoid character deletion along with your houses and stores. This ensures there is enough space for everyone on the server.
+10. Please make sure your char logs in at least once every 3 months to avoid character deletion along with your houses and stores. This ensures there is enough space for everyone on the server.
 11. Boss rules. After killing bosses, such as gods or other large monsters, you must leave the map. and make opertunities for other players to kill. No stealing kills. If you are caught doing so, or someone reports you, you will be sent to jail for at least 12 hours.
 12. Suggestions welcome, demands are not. We welcome any suggestions and feedback; however,, Forcing us to implement specific changes will result in you being jailed.
 
