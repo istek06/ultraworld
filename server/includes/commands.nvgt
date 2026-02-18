@@ -115,7 +115,7 @@ void command(player@p, string command) {
 			f.open(filename, "wb");
 			f.write(new_content);
 			f.close();
-			admintell(p.name + " updated the file: " + filename);
+			admintell(p.name + " updated the following file: " + filename);
 			send_reliable(p, filename + " updated successfully.", 2);
 			return;
 		}
@@ -3153,7 +3153,6 @@ void command(player@p, string command) {
 		} else {
 			guess_game::process_guess(p, string_to_number(parsed[1]));
 		}
-		return;
 		return;
 	} else if (parsed[0] == "/playernotify" and parsed.length() >= 4 and p.is_manager()) {
 		int index2 = get_player_index_from(parsed[1]);

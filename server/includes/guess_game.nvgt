@@ -100,7 +100,7 @@ namespace guess_game {
 		save();
 		string msg = "A new Guess the Number game has started! Can you find the secret number between " + min + " and " + max + "? Prize: " + amount + " " + reward_item + "! You have " + mins + " minutes. Type /guess <number> to win!";
 		snotify(0, msg, "gnstart" + sndtype, true, "notifications");
-		admintell("Staff " + staff + " started Guess Game. Target: " + secret_number);
+		admintell(staff + " started Guess Game. Target: " + secret_number);
 	}
 
 	void loop() {
@@ -184,8 +184,8 @@ namespace guess_game {
 			return;
 		}
 		if (num < min_val or num > max_val) {
-			send_reliable(p, "Error: Your guess " + num + " is out of the valid range (" + min_val + "-" + max_val + ")!", 0);
 			send_reliable(p, "play_s gnsubmited.ogg", 6);
+			send_reliable(p, "Error: Your guess " + num + " is out of the valid range (" + min_val + "-" + max_val + ")!", 0);
 			return;
 		}
 		if (participants.find(p.name) > -1) {
@@ -195,6 +195,7 @@ namespace guess_game {
 		if (guesses.exists("" + num)) {
 			string other;
 			guesses.get("" + num, other);
+			send_reliable(p, "play_s gnnumtaken.ogg", 6);
 			send_reliable(p, "Too late! Number " + num + " was already guessed by " + other + "!", 0);
 			return;
 		}
@@ -204,7 +205,7 @@ namespace guess_game {
 		if (num == secret_number) {
 			active = false;
 			save();
-			snotify(0, "WE HAVE A WINNER! " + p.nickname + " guessed the secret number " + num + " and won " + reward_amount + " " + reward_item + "!", "auctionwon" + sndtype, true, "auctions");
+			snotify(0, "WE HAVE A WINNER! " + p.nickname + " guessed the secret number " + num + " and won " + reward_amount + " " + reward_item + "!", "leaveevent" + sndtype, true, "notifications");
 			p.inv_add_item(reward_item, reward_amount);
 			reset_vars();
 		} else {

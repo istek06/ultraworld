@@ -40,6 +40,7 @@ To use a command, you can either press `Slash`, type `/` 1 more time, or press t
 - `teamnickname <nick>`: Changes your team's display name.
 - `atmod <name>`: Promotes a team member as a moderator.
 - `rtmod <name>`: Demotes a team moderator.
+- `teammods`: Displays the team moderators.
 - `tinvite <name>`: Invites a player to your team, if you are a moderator or a leader of the team.
 - `ati`: Accepts a pending team invitation.
 - `rti`: Rejects a pending team invitation.

@@ -1,4 +1,5 @@
 ## Changes on Wednesday, February 18, 2026
+- Updated some sounds and added new sounds to the Guess the Number game.
 - Fixed an issue where hunger would not increase while drunk.
 - Fixed the zone issue in the partner house of the armrest of the couch.
 - Crafting ammos will now give some amounts of xp.
